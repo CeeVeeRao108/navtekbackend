@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Welcome superadmin</title>
+</head>
+
+<body>
+	<h1>Registration Of admin</h1>
+
+
+	<br>
+	<form id="reg-form">
+		<input type="text" name="suse" id="suse" placeholder=" Super Admin Username">
+		<input type="password" name="spas" id="spas" placeholder=" Super Admin Password">
+		<br>
+		<input type="text" autocomplete="off" id="username" placeholder="Username" />
+		<input type="password" autocomplete="off" id="password" placeholder="Password" />
+		<br>
+		<input type="submit" value="Submit Form" onclick="myFunc()" />
+		<a href="http://localhost:9999/login.html">Admin Login</a>
+	</form>
+
+	<script>
+		function myFunc() {
+
+			let user = document.getElementById('suse');
+			let pass = document.getElementById('spas');
+
+
+
+
+			if (user.value === "admin01" && pass.value === "pass01") {
+				const form = document.getElementById('reg-form')
+				form.addEventListener('submit', registerUser)
+
+				async function registerUser(event) {
+					event.preventDefault()
+					const username = document.getElementById('username').value
+					const password = document.getElementById('password').value
+
+					const result = await fetch('/api/register', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							username,
+							password
+						})
+					}).then((res) => res.json())
+
+					if (result.status === 'ok') {
+
+						alert('Success')
+					} else {
+						alert(result.error)
+					}
+				}
+			} else {
+				alert("Not Authorized")
+			}
+
+
+
+
+		}
+	</script>
+</body>
+
+</html>
